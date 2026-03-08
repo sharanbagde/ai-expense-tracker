@@ -2,6 +2,7 @@ import ExpenseForm from "../components/ExpenseForm";
 import { useState, useEffect } from "react";
 import { db } from "../services/firebaseClient";
 import { exportExpenses } from "../utils/exportCSV";
+import ExpenseChart from "../components/ExpenseChart";
 
 import {
   collection,
@@ -63,11 +64,9 @@ export default function Dashboard() {
       {/* Form */}
       <ExpenseForm addExpense={addExpense} />
 
-      {/* Expense Analytics Chart */}
-      <ExpenseChart data={expenses} />
-
       {/* Expense List */}
       <div className="mt-6 w-96">
+
       {/*Export Button*/}
       <button
                onClick={() => exportExpenses(expenses)}
@@ -97,6 +96,9 @@ export default function Dashboard() {
         ))}
       </div>
 
+      {/* Expense Analytics Chart */}
+      <ExpenseChart data={expenses} />
+      
       {/* Total */}
       <div className="mt-6 text-xl font-semibold">
         Total Spent: ₹{total}
