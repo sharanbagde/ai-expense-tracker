@@ -1,6 +1,7 @@
 import ExpenseForm from "../components/ExpenseForm";
 import { useState, useEffect } from "react";
 import { db } from "../services/firebaseClient";
+import { exportExpenses } from "../utils/exportCSV";
 
 import {
   collection,
@@ -32,6 +33,7 @@ export default function Dashboard() {
     }
   };
 
+  
   // Add expense to UI
   const addExpense = (expense) => {
     setExpenses((prev) => [expense, ...prev]);
@@ -61,8 +63,19 @@ export default function Dashboard() {
       {/* Form */}
       <ExpenseForm addExpense={addExpense} />
 
+      {/* Expense Analytics Chart */}
+      <ExpenseChart data={expenses} />
+
       {/* Expense List */}
       <div className="mt-6 w-96">
+      {/*Export Button*/}
+      <button
+               onClick={() => exportExpenses(expenses)}
+               className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Export CSV
+            </button>
+
         {expenses.map((expense) => (
           <div
             key={expense.id}
@@ -79,6 +92,7 @@ export default function Dashboard() {
             >
               Delete
             </button>
+            
           </div>
         ))}
       </div>
